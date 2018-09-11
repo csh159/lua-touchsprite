@@ -2,6 +2,7 @@
 中文字库.txt
 [lib]
 [file]
+ui.lua
 AWZ.lua
 tsp.lua
 main.lua
