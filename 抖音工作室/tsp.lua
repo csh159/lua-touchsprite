@@ -31,8 +31,8 @@ function print_r(t)
 		nLog(tostring(t).." {")
 		sub_print_r(t,"  ")
 		nLog("}")
-	else
-		sub_print_r(t,"  ")
+	elseif (type(t)=="string") then
+		nLog(t)
 	end
 end
 --解锁
@@ -95,6 +95,7 @@ function delay(times)
 end
 function 多点找色(name,dj,order,logTxt,stayTime)
 	local dj = dj or false
+	local order = order or 1
 	local arr = {}
 	if type(name) == 'table' then
 		if #name == 2 then
@@ -175,9 +176,14 @@ function isColor(x,y,c,s)
     end
 end
 --输入---
-function input(txt)
-	inputText(txt)
-	delay(2)
+function input(txt,way,times)
+	local times = times or 1
+	if way then
+		inputStr(txt)
+	else
+		inputText(txt)
+	end
+	delay(1000*times)
 end
 --多点验证比色
 function 多点比色(name,clicks,oder,logTxt,s,stayTime)
@@ -215,13 +221,51 @@ function 多点比色(name,clicks,oder,logTxt,s,stayTime)
 end
 --多点验证比色-end
 function d(name,clicks,oder,logTxt,s,stayTime)
+--	print_r(t[name])
 	if type(t[name][1]) == 'table' then
 		return 多点比色(name,clicks,oder,logTxt,s,stayTime)
 	else
 		return 多点找色(name,clicks,oder,logTxt,stayTime)
 	end
 end
-
+--tab
+--多点验证比色
+function tab(name,clicks,oder,logTxt,s,stayTime)
+	local oder = oder or 1
+	local clicks = clicks or false
+	local s = s or 85
+	local arr = {}
+	if type(name) == 'table' then
+		if #name == 2 then
+			arr = t[name[1]][name[2]]
+		elseif #name == 3 then
+			arr = t[name[1]][name[2]][name[3]]
+		end
+	else
+		arr = t[name]
+	end
+	local index = 0
+	for i,v in ipairs(arr) do
+		if (isColor(v[1],v[2],v[3],s)) then
+			index = index + 1
+		end
+	end
+	if index >= #arr-1 then
+		if logTxt then
+			nLog(logTxt)
+		else
+			if type(name) == 'table' then
+				nLog(name[1]..'->'..name[2])
+			else
+				nLog('tab->成功-->'..name)
+			end
+		end
+		if clicks then
+			click(arr[oder][1],arr[oder][2],1,stayTime)
+		end
+		return true
+	end
+end
 --滑动
 function moveTo_(x1,y1,x2,y2,setp,times)
 	local setp = setp or 5
@@ -314,12 +358,16 @@ end
 --返回值：返回 true、false。
 function ip()
 	local http = require("szocket.http")
-	local res, code = http.request("http://ipof.in/json",30);
-	if code == 200 then
-		local json = sz.json
-		data = json.decode(res)
-		return data.ip
+	local res, code = http.request("http://ip.cn",30);
+	if code ~= nil then
+		local i,j = string.find(res, '%d+%.%d+%.%d+%.%d+')
+		return string.sub(res,i,j)
 	end
+end
+function rd(min,max)
+	local min = min or 1
+	local max = max or min
+	return math.random(min,max)
 end
 --文件按行写入--------------
 function writeFile(file_name,string,way)
@@ -477,13 +525,13 @@ end
 --nLog(myRand(5,9,""))
 --nLog(myRand(6,9))
 --nLog(myRand(7,3))
-function close_VPN()
+function VPNX()
 	setVPNEnable(false)
-	delay(1)
+	mSleep(1000)
 end
 function VPN()
 	setVPNEnable(true)
-	mSleep(2000)
+	mSleep(1000)
 	local LineTime = os.time()
 	local OutTimes = 60
 	while (os.time()-LineTime<OutTimes) do
@@ -496,7 +544,7 @@ function VPN()
 		else
 			nLog("VPN 关闭状态"..flag.status)
 		end
-		mSleep(2000)
+		mSleep(1000)
 	end
 end
 function VPNisOK()
@@ -511,6 +559,46 @@ function VPNisOK()
 	end
 end
 ---------------VPN---------------
+function boxshow(txt,x1,y1,x2,y2)
+	adbox = adbox or 0
+	if adbox == 0 then
+		adbox = 1
+		fwShowWnd("wid",0,0,0,0,1)
+		mSleep(2000)
+	end
+	fwShowTextView("wid","textid",txt,"center","FF0000","FFDAB9",10,0,x1,y1, x2,y2,0.5)
+	--fwShowTextView("wid","textid","这是一个文本视图","center","FF0000","FFDAB9",0,20,0,0,200,100,0.5)
+end
+
+function post(url,arr)
+	local sz = require("sz")
+	local cjson = sz.json
+	local http = sz.i82.http
+	safari = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36'
+	headers = {}
+	headers['User-Agent'] = safari
+	headers['Referer'] = url
+	headers_send = cjson.encode(headers)
+	post_send = cjson.encode(arr)
+	nLog(post_send)
+	post_escaped = http.build_request(post_send)
+	status_resp, headers_resp, body_resp = http.post(url, 5, headers_send, post_escaped)
+	if status_resp == 200 then
+		local json = sz.json
+		return json.decode(body_resp)
+	end
+end
+
+function get(url)
+	local sz = require("sz")
+	local http = require("szocket.http")
+	local res, code = http.request(url);
+	if code == 200 then
+		local json = sz.json
+		return json.decode(res)
+	end
+end
+
 log('基础函数加载完成')
 
 
