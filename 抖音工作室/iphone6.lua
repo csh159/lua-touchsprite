@@ -1,6 +1,43 @@
 nLog('iphone6')
 
-
+function orch(name,dj,order,logTxt,stayTime)
+	local dj = dj or false
+	local order = order or 1
+	local arr = {}
+	if type(name) == 'table' then
+		if #name == 2 then
+			arr = t[name[1]][name[2]]
+		elseif #name == 3 then
+			arr = t[name[1]][name[2]][name[3]]
+		end
+	else
+		arr = t[name]
+	end
+	x1,y1 = findMultiColorInRegionFuzzy(arr[1],arr[2],arr[3],arr[4],arr[5],arr[6],arr[7])
+	if x1 > 0 and y1 > 0 then
+		if dj then
+			local new_arr2 = split(arr[2],',')
+			for i,v in pairs(new_arr2)do
+				new_arr2[i]=split(v,'|')
+			end
+			print_r(new_arr2)
+			if order == 1 then
+				click(x1,y1)
+			else
+				click(x+new_arr2[order-1][1],y+new_arr2[order-1][2])
+			end
+			if type(name) ~= 'table' then
+				log("点击-->( "..order..' )->'..name)
+			end
+		else
+			if type(name) ~= 'table' then
+				log("找到-->( "..order..' )->'..name)
+			end
+		end
+		log(logTxt)
+		return true
+	end
+end
 
 t={}
 

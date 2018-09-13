@@ -118,6 +118,13 @@ function commnet_follow()
 					log(x..','..y)
 					keepScreen(true)
 					local commnetTime = orc({x,y-50,x+150,y})
+					xiaoshitable={x-7,y-55,x+141,y-10}
+					t['orc小时']={0x5b5b5b, "-6|-6|0x5b5b5b,15|-6|0x5b5b5b,25|-20|0x5b5b5b,66|-19|0x5b5b5b,66|-4|0x5b5b5b", 80, 
+						xiaoshitable[1], xiaoshitable[2], xiaoshitable[3], xiaoshitable[4]
+					}
+					if orch('orc小时')then
+						commnetTime = commnetTime * 60
+					end
 					local likesheart = {x+558,y-271,x+627,y-10}
 					t['心']={ 0x505052, "-15|-1|0x505052,18|-1|0x505052,2|-10|0x141414,2|18|0x505052,2|22|0x141414", 90, 
 						likesheart[1], likesheart[2], likesheart[3], likesheart[4]
@@ -132,7 +139,7 @@ function commnet_follow()
 					end
 					keepScreen(false)
 					
-					if commnetTime <= 20 and likes <= 10 then
+					if commnetTime >0 and commnetTime <= 20 and likes <= 10 then
 						click(x-638,y+7)
 						commnet_up_key = true
 					elseif commnetTime >= 21 and likes <= 10 then
@@ -220,16 +227,45 @@ end
 --]]
 
 
+--[[
+
+	if d('评论分割线')then
+		log(x..','..y)
+		keepScreen(true)
+		local commnetTime = orc({x,y-50,x+150,y})
+
+		xiaoshitable={x-7,y-55,x+141,y-10}
+		t['orc小时']={0x5b5b5b, "-6|-6|0x5b5b5b,15|-6|0x5b5b5b,25|-20|0x5b5b5b,66|-19|0x5b5b5b,66|-4|0x5b5b5b", 80, 
+			xiaoshitable[1], xiaoshitable[2], xiaoshitable[3], xiaoshitable[4]
+		}
+		if orch('orc小时')then
+			commnetTime = commnetTime * 60
+		end
+		
+		local likesheart = {x+558,y-271,x+627,y-10}
+		t['心']={ 0x505052, "-15|-1|0x505052,18|-1|0x505052,2|-10|0x141414,2|18|0x505052,2|22|0x141414", 90, 
+			likesheart[1], likesheart[2], likesheart[3], likesheart[4]
+		}
+		local likes = 0
+		if d('心')then
+			likes = orc({x-27,y+31,x+36,y+69})
+			box("评论-"..commnetTime.."->likes"..likes)
+		else
+			log("没有心型")
+			likes = 100
+		end
+	nLog('commnetTime='..commnetTime)
+	nLog('likes='..likes)
+	end
 
 
 
 
-
-
-
-
-
-
+--t['orc小时']={0x5b5b5b, "-6|-6|0x5b5b5b,15|-6|0x5b5b5b,25|-20|0x5b5b5b,66|-19|0x5b5b5b,66|-4|0x5b5b5b", 80, 
+--	108, 541, 250, 580
+--}
+--orch('orc小时')
+--]]
 
 
 

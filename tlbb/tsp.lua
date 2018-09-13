@@ -36,9 +36,9 @@ end
 function click(x,y,times)
 	times = times or 1
 --	log("准备点击("..x..","..y..")")
-	touchDown(1, x+math.random(-3,3), y+math.random(-3,3))
+	touchDown(1, x, y)
 	mSleep(50)
-	touchUp(1, x+math.random(-3,3), y+math.random(-3,3))
+	touchUp(1, x, y)
 	mSleep(1000*times)
 end
 function delay(times)

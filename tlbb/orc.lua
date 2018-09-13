@@ -1,6 +1,6 @@
 init('0',1)
 require("TSLib")
-
+require("upload")
 wwlist = '1234567890'
 
 function upTlbb(t)
@@ -71,12 +71,20 @@ function UpOrc()
 						postTlbb[k] = res
 					end
 				end
+				local ybshow={780, 437, 872, 458}
+				lzScreen(780, 437, 872, 458,0.5)
+				local uploadqq = tostring(readQQ() or backname(awz))
+				local uproleMun = tostring(roleMun)
+				pic_url = Tlbbupload(uploadqq,uproleMun)['data']['url']
+				nLog('pic_url->'..pic_url)
+				
 				keepScreen(false)
 				if done(aoc['游戏']['游戏弹窗-任务牌'],'游戏弹窗-任务牌',true,1)then
 					postTlbb.imei = IMEI
 					postTlbb.phonename = getDeviceName()
 					postTlbb.idfa = idfa
 					postTlbb.awz = awz
+					postTlbb.urls = pic_url
 					postTlbb.role = roleMun
 					postTlbb.mail = readQQ() or backname(awz)
 					upTlbb(postTlbb)

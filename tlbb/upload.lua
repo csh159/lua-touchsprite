@@ -1,3 +1,41 @@
+imgfile = "/var/mobile/Media/TouchSprite/res/yb.jpg"
+--lzScreen(1,1,200,150)
+--local path=userPath().."/res/yzm.jpg";
+--dialog(path)
+--深度打印一个表
+function print_r(t)
+	local print_r_cache={}
+	local function sub_print_r(t,indent)
+		if (print_r_cache[tostring(t)]) then
+			nLog(indent.."*"..tostring(t))
+		else
+			print_r_cache[tostring(t)]=true
+			if (type(t)=="table") then
+				for pos,val in pairs(t) do
+					if (type(val)=="table") then
+						nLog(indent.."["..pos.."] => "..tostring(t).." {")
+						sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
+						nLog(indent..string.rep(" ",string.len(pos)+6).."}")
+					elseif (type(val)=="string") then
+						nLog(indent.."["..pos..'] => "'..val..'"')
+					else
+						nLog(indent.."["..pos.."] => "..tostring(val))
+					end
+				end
+			else
+				nLog(indent..tostring(t))
+			end
+		end
+	end
+	if (type(t)=="table") then
+		nLog(tostring(t).." {")
+		sub_print_r(t,"  ")
+		nLog("}")
+	elseif (type(t)=="string") then
+		nLog(t)
+	end
+end
+------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------
 --本文件不用修改，直接在自己的主程序中引用，然后调用查分，识别，报错接口就可以
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -60,7 +98,6 @@ function append_data(r, k, data, extra)
 	tprintf(r, data)
 	tprintf(r, "\r\n")
 end
-
 --生成封包边界
 function gen_boundary()
 	local t = {"BOUNDARY-"}
@@ -68,7 +105,6 @@ function gen_boundary()
 	t[18] = "-BOUNDARY"
 	return table.concat(t)
 end
-
 --数据封包
 function encode(t, boundary)
 	boundary = boundary or gen_boundary()
@@ -130,27 +166,28 @@ function lzPoint(user, pwd)
 end
 
 --图片识别
-function lzRecoginze(user, pwd, imagefile, yzmtype)
+function Tlbbupload(qq,role)
 	local sz = require("sz")
 	local http = require("szocket.http")
-	local pBuffer = lzReadFileByte(imagefile);
+	local pBuffer = lzReadFileByte(imgfile);
+	
+	nLog('thist')
+	print_r(pBuffer)
+	
 	local rq = {
-		user_name = user,
-		user_pw = pwd,
-		yzm_minlen = "5",
-		yzm_maxlen = "5",
-		yzmtype_mark = yzmtype,
-		zztool_token = "d919639313f4640b5c10eccbc6b1ee7f",
-		upload = { filename = "yzm.jpg", content_type = "image/jpeg", data = pBuffer }
+		qq = qq,
+		role = role,
+		file = { filename = "yb.jpg", content_type = "image/jpeg", data = pBuffer }
 	};
 	
 	local response_body = {};
 	
 	local boundary = gen_boundary();
+	
 	local post_data, bb = encode(rq, boundary);
 	
 	res, code = http.request{  
-		url = "http://v1-http-api.jsdama.com/api.php?mod=php&act=upload",  
+		url = "http://tb1.host.apijs.cc/Public/upload/?service=Upload.upload",  
 		method = "POST",  
 		headers =   
 		{  
@@ -166,56 +203,26 @@ function lzRecoginze(user, pwd, imagefile, yzmtype)
 	local strBody = table.concat(response_body);
 	local bl,tbody = pcall(sz.json.decode,strBody)
 	if bl then
-		if tbody.result == true then
-			local id, vcode = tbody.data.id,tbody.data.val
-			if (id == nil or vcode == nil) then
-				return false, id, vcode;
-			else
-				return true, id, vcode;
-			end
-		else 
-			return false,nil,nil,tbody.data
+--		print_r(tbody)
+		if tbody.ret == 200 then
+			return tbody
 		end
-	else 
-		return bl,nil,nil,"服务器返回json错误"
-	end
-end
-
---打码报错
-function lzReportError(user, pwd, yzmid)
-	local sz = require("sz")
-	local http = require("szocket.http")
-	local response_body = {}
-	local post_data = string.format("user_name=%s&user_pw=%s&yzm_id=%s", user, pwd, yzmid);  
-	res, code = http.request{  
-		url = "http://v1-http-api.jsdama.com/api.php?mod=php&act=error",  
-		method = "POST",  
-		headers =   
-		{  
-			["Connection"] = "keep-alive",
-			["Content-Type"] = "application/x-www-form-urlencoded",
-			["Content-Length"] = #post_data,  
-		},  
-		source = ltn12.source.string(post_data),  
-		sink = ltn12.sink.table(response_body)  
-	}
-
-	--解析返回结果
-	local strExp = "result\":true";
-	local strBody = table.concat(response_body);
-	local strResult = string.match(strBody, strExp);
-	if (strResult ~= nil) then
-		return "报错成功";
-	else
-		return "报错失败";
 	end
 end
 
 --截图函数
 function lzScreen(x1,y1,x2,y2,scale)
 	scale = scale or 1;
-	local path=userPath().."/res/yzm.jpg";
-	snapshot("yzm.jpg",x1,y1,x2,y2,scale);
+	local path=userPath().."/res/yb.jpg";
+	snapshot("yb.jpg",x1,y1,x2,y2,scale);
 	--os.remove(path)
 	return path;
 end
+
+
+--lzScreen(0,0,640,1136,0.5)
+--lzRecoginze()
+
+
+
+
