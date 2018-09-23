@@ -55,6 +55,9 @@ function awz_next()
 			nLog("the result is: " .. result);
 			if tonumber(result) == 1 then
 				return true
+			elseif tonumber(result) == 200 then
+				closeApp(frontAppBid())
+				delay(2)
 			end
 		end	
 	end

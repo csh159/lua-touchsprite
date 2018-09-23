@@ -140,6 +140,11 @@ function city()
 					mSleep(1000)
 				elseif UI('返回','活动中心可以抽奖',true)then
 				elseif UI_pic('返回','活动右侧例表',true)then
+					right_red_tips = right_red_tips or 1
+					right_red_tips = right_red_tips + 1
+					if right_red_tips % 5 == 0 then
+						click(1185,225)
+					end
 				else
 					moveTo(1181,500,1181,300,20)
 					click(1185,225)

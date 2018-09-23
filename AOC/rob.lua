@@ -68,7 +68,7 @@ function yiji_other()
 		上兵统计 = 0
 		delay(5)	
 	elseif UI('other','不能直接扫荡_打',true,1)then		--战斗
-	elseif UI('other','直接扫荡',true,1)then		--战斗
+	elseif UI_pic('other','直接扫荡',true,1)then		--战斗
 		上兵统计 = 0
 		delay(5)
 	elseif UI('other','误点水泉',true,1)then
