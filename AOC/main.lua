@@ -348,6 +348,7 @@ aoc['other']={}
 	aoc['other']['资源例表']={{688,138,0xf3d665},{687,140,0x8a7b3b},{376,300,0xff4345},}
 	aoc['other']['绿色赠品']={{665,510,0x8cef44},{606,483,0x47bf4b},{744,485,0x32b83f},}
 	aoc['other']['决战之颠']={{710,692,0x4ace3a},{1091,41,0xd22d0a},{806,45,0xd22d0a},}
+	aoc['other']['打开礼物']={ 0xe9e0ef, "-1|-8|0x3b9346,32|0|0x4ac845,159|-21|0x14874b", 90, 690, 621, 897, 678}
 	
 
 aoc['宝箱']={}
@@ -447,6 +448,7 @@ function other()
 	elseif UI('other','得到配方',true,1)then	
 	elseif UI('other','宝箱奖励',true,1)then	
 	elseif UI('other','国家发展宝箱-领取',true,1)then
+	elseif UI_pic('other','打开礼物',true)then
 	elseif UI('other','选择国家界面')then
 		国家选择 = tonumber(values.world)+1
 		click(aoc['国家位置'][国家选择][1],aoc['国家位置'][国家选择][2])
@@ -467,7 +469,13 @@ function other()
 			启动画面 = 0
 		end
 	else
-		click(40,40)
+		other_click_mun = other_click_mun  or 1
+		other_click_mun = other_click_mun + 1
+		if other_click_mun%10 ==0 then
+			click(h/2,w/2)
+		else
+			click(40,40)
+		end
 	end
 	
 end

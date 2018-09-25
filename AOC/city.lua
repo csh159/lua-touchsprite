@@ -147,6 +147,8 @@ function city()
 					end
 				else
 					moveTo(1181,500,1181,300,20)
+					moveTo(1181,500,1181,300,20)
+					moveTo(1181,500,1181,300,20)
 					click(1185,225)
 					if not UI_pic('返回','活动右侧例表',true) then
 						UI('返回','返回图标',true,1)
