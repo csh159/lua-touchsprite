@@ -245,11 +245,16 @@ function tab(name,clicks,oder,logTxt,s,stayTime)
 		arr = t[name]
 	end
 	local index = 0
-	for i,v in ipairs(arr) do
-		if (isColor(v[1],v[2],v[3],s)) then
+	for var= 1, #arr-1 do
+		if (isColor(arr[var][1],arr[var][2],arr[var][3],s)) then
 			index = index + 1
+		elseif (isColor(arr[var][1],arr[var][2],arr[#arr][3],s)) then
+			index = index + 1
+		else
+			return false
 		end
 	end
+		
 	if index >= #arr-1 then
 		if logTxt then
 			nLog(logTxt)
