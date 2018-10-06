@@ -52,6 +52,7 @@ function active(app,times)
 		runApp(app)
 		mSleep(times*1000)
 	elseif bid == app then
+		log("在前端")
 		return true
 	end
 end
@@ -67,6 +68,10 @@ function closeX(app_bid,times,way)
 end
 function log(txt,show,times)
 	local times = 1
+	if type(txt) == 'table' then
+		print_r(txt)
+		return
+	end
 	if show == 'all' then
 		toast(show,times)
 		nLog(txt)
@@ -80,7 +85,9 @@ function click(x,y,times,stayTime,logtxt)
 	local times = times or 1
 	local stayTime = stayTime or 0.05
 	if logtxt then
+--	if 1 then
 		nLog("准备点击->"..logtxt.."("..x..","..y..")")
+--		nLog("准备点击->("..x..","..y..")")
 	end
 	local offset_x = math.random(-3,3)
 	local offset_y = math.random(-3,3)
@@ -90,7 +97,7 @@ function click(x,y,times,stayTime,logtxt)
 	mSleep(times * 1000)
 end
 function delay(times)
-	times = times or 1
+	local times = times or 1
 	mSleep(times*1000)
 end
 function 多点找色(name,dj,order,logTxt,stayTime)
@@ -113,7 +120,7 @@ function 多点找色(name,dj,order,logTxt,stayTime)
 			for i,v in pairs(new_arr2)do
 				new_arr2[i]=split(v,'|')
 			end
-			print_r(new_arr2)
+--			print_r(new_arr2)
 			if order == 1 then
 				click(x,y)
 			else
@@ -127,7 +134,7 @@ function 多点找色(name,dj,order,logTxt,stayTime)
 				log("找到-->( "..order..' )->'..name)
 			end
 		end
-		log(logTxt)
+--		if logTxt then 	log(logTxt) end
 		return true
 	end
 end
@@ -183,7 +190,7 @@ function input(txt,way,times)
 	else
 		inputText(txt)
 	end
-	delay(1000*times)
+	delay(times)
 end
 --多点验证比色
 function 多点比色(name,clicks,oder,logTxt,s,stayTime)
@@ -266,6 +273,10 @@ function tab(name,clicks,oder,logTxt,s,stayTime)
 			end
 		end
 		if clicks then
+			nLog("click->"..oder)
+			nLog(arr[oder][1])
+			nLog(arr[oder][2])
+			
 			click(arr[oder][1],arr[oder][2],1,stayTime)
 		end
 		return true
@@ -589,6 +600,7 @@ function post(url,arr)
 	post_escaped = http.build_request(post_send)
 	status_resp, headers_resp, body_resp = http.post(url, 5, headers_send, post_escaped)
 	if status_resp == 200 then
+--		dialog(body_resp)
 		local json = sz.json
 		return json.decode(body_resp)
 	end
