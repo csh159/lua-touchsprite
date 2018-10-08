@@ -349,6 +349,7 @@ aoc['other']={}
 	aoc['other']['绿色赠品']={{665,510,0x8cef44},{606,483,0x47bf4b},{744,485,0x32b83f},}
 	aoc['other']['决战之颠']={{710,692,0x4ace3a},{1091,41,0xd22d0a},{806,45,0xd22d0a},}
 	aoc['other']['打开礼物']={ 0xe9e0ef, "-1|-8|0x3b9346,32|0|0x4ac845,159|-21|0x14874b", 90, 690, 621, 897, 678}
+	aoc['other']['捡到英雄']={{710,677,0x40c7b9}, {739,656,0x2299bb}, {636,652,0x2c92ba}, }
 	
 
 aoc['宝箱']={}
@@ -461,6 +462,7 @@ function other()
 	elseif UI('新手','招兵确定',true,1)then
 	elseif UI_pic('宝箱','展开',true)then
 	elseif UI('other','绿色赠品',true,1)then
+	elseif UI('other','捡到英雄',true,1)then
 	elseif UI('other','启动画面',false,1)then
 		启动画面 = 启动画面 or 1
 		启动画面 = 启动画面 + 1

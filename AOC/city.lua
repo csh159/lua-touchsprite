@@ -208,30 +208,7 @@ function city()
 					UI('返回','返回图标',true,1)
 					click(250,371)
 				end
---			elseif setting[3] and UI('返回','英雄',false,1)then
---				if UI('返回','英雄界面',false,1)then
---					toast('英雄界面',1)
---					if UI('返回','有新装备提示界面')then
---						if UI_pic('返回','英雄装备',true,1)then
---							click(228,215)
---							UI_pic('返回','英雄穿戴',true,1)
---						end
---					elseif UI('返回','有装备可穿',true,1)then
---					elseif UI_pic('返回','天赋学习',true)then
---					elseif UI('返回','天赋',true,1)then
---					else
---						UI('返回','返回图标',true,1)
---					end
-					
---				elseif UI_pic('返回','英雄红点',true,1)then
---				else
---					if UI('返回','英雄展开',true,1)then
---					elseif c_p(aoc['返回']['英雄未获得'],'英雄未获得',false)then
---						moveTo(600,300,400,300,10)
---					else
---						UI('返回','返回图标',true,1)
---					end
---				end
+
 				--点击城堡-----------------------------------------
 			elseif UI('城堡','在城堡中',false,1)then
 				if 上传信息 and values.oneormore ~= '1' then
@@ -251,6 +228,7 @@ function city()
 						end
 						keepScreen(false)
 						upAoc(show)
+						upAoc_wenfree(show)
 						上传信息 = false
 					end
 				else
