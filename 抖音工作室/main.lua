@@ -50,22 +50,41 @@ end
 function Tip()
 	if d('弹窗_允许',true,1,"是否允许发送通知")then
 	elseif d('弹窗_位置允许',true,1,"是否允许访问你的位置允许")then
-	elseif d('弹窗_通讯录取消',true,1)then
-	elseif d('弹窗_取消回复',true,1,"误点操作")then
-		return '取消回复'
+--	elseif d('弹窗_通讯录取消',true,1)then
+--	elseif d('弹窗_取消回复',true,1,"误点操作")then
+--		return '取消回复'
 	else
 		log('no Tip')
 		return true
 	end
 end
 
+function newphone()
+	url='http://127.0.0.1:8080/reset_app'
+	get(url)
+end
 
 
+function login()
+	local timeline = os.time()
+	local utime = 60*5
+	
+	while (os.time()-timeline < utime) do
+		if active(appbid,5)then
+			if d('首页红绿') and tab('首页菜单',true,4)then
+			
+			
+			
+		
+		
+			end
+		end
+		delay(1)
+	end
 
+end
 
-inputText('15185731358')
-
-
+login()
 
 
 
