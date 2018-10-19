@@ -7,3 +7,4 @@ name.lua
 快头条.lua
 api.lua
 UI.lua
+ocr.lua

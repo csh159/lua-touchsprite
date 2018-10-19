@@ -8,7 +8,14 @@ require("UI")
 
 arr={}
 arr.bid="com.tencent.xin"
-arr['bid快头条']="com.ifeng.ifengnews1"
+
+arr.newsbid={}
+arr.newsbid['快头条']="com.ifeng.ifengnews1"
+arr.newsbid['东方头条']="com.gaoxin.EastNewsAppstore"
+arr.newsbid['趣头条']="com.jifen.qukan"
+arr.newsbid['多点趣闻']="com.xinwen.duodian"
+
+
 t={}
 require("快头条")
 
@@ -112,11 +119,12 @@ function wechat_play()
 	delay(rd(100,200)/100)
 end
 
---path = appDataPath(arr.bid); 
---dialog(path)		
+path = appDataPath(arr.newsbid['快头条']); 
+dialog(path)		
 
 api.wechat()
---os.exit()
+--kuaitoutiao()
+os.exit()
 
 arr.workTime = 60*1
 arr.work_key = true
@@ -150,6 +158,12 @@ while (true) do
 		else
 			log("微信休息,执行其它任务",true)
 			kuaitoutiao()
+			
+			
+			
+			
+			
+			
 			if frontAppBid() == arr.bid then
 				closeApp(arr.bid)
 				log("例行休息",true)

@@ -79,7 +79,6 @@ function log(txt,show,times)
 		toast(txt,times)
 	else
 		nLog(txt)
-		toast(txt,times)
 	end
 end
 function click(x,y,times,stayTime,logtxt)
@@ -329,7 +328,7 @@ function moveTo_(x1,y1,x2,y2,setp,times)
 			end
 		end
 	end
-	touchUp(1, x2,y2)
+--	touchUp(1, x2,y2)
 end
 --将指定文件中的内容按行读取
 function readFile(path)
