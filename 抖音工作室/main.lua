@@ -39,6 +39,18 @@ function orc(t)
 	return 0
 end
 
+zfb={
+	"❤","❥","웃","유","♋","☮","✌","☏","☢","☠","✔",
+	"☑","♚","▲","♪","✈","✞","÷","↑","↓","◆","◇","⊙",
+	"■","□","△","▽","¿","─","│","♥","❣","♂","♀","☿ ",
+	"Ⓐ","✍","✉","☣","☤ ","✘","☒","♛","▼","♫","⌘",
+	"≈","←","→","◈","◎","☉","★","☆","⊿","※","¡","━ ",
+	"┃ ","♡","ღ","ツ","☼","☁","❅","♒","✎","©","®","™",
+	"Σ","✪","✯","☭","➳","卐","√","↖","↗","●","◐","Θ",
+	"◤","◥",
+}
+
+
 function box(txt)
 	boxshow(txt,arrs.show[1],arrs.show[2],arrs.show[3],arrs.show[4])
 end
@@ -79,6 +91,7 @@ function login()
 	local timeline = os.time()
 	local utime = 60*5
 	local 改资料 = true
+	local 改过资料 = false
 	accountdata = get('http://wenfree.cn/api/Public/aoc/?service=Dy.get')
 	if not(accountdata) then
 		return false
@@ -89,7 +102,9 @@ function login()
 			if d('首页红绿') then
 				if d('首页红绿_完善资料',true)then
 					
-
+				elseif 改过资料 then
+					dialog("修改完成", 0)
+					return true
 				elseif 改资料 then
 					if d('首页红绿_我的页面')then
 						click(123,255)	
@@ -114,7 +129,7 @@ function login()
 			elseif d('弹窗_微博登录_安全验证')then
 				delay(3)
 				imgfile = lzScreen(210, 670, 545, 991,1.0)
-				if false or lz_yzm() then
+				if d('弹窗_微博登录_安全验证') and lz_yzm() then
 --					apple_yzm = "260,270|67,266|68,69|258,62|264,253"
 					jiegoulist = strSplit(apple_yzm,"|")
 					for i,v in ipairs(jiegoulist) do
@@ -145,25 +160,33 @@ function login()
 				delay(5)
 			elseif d('弹窗_微博登录_授权登录',true)then
 			elseif d('个人资料_保存')then
-				click(178,1054)
+				click(509,1054)
+				input("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b")
+				
+				inputtimes = os.time()
+				while (os.time()-inputtimes < 10) do
+					if d('个人资料_签名位置',true) then
+						input("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b")
+					else
+						break
+					end
+				end
+			
 				input("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b")
 				local dyurl = 'http://idfa888.com/Public/dyid/?service=dyid.readtext'
 				local dydata=get(dyurl)
 				if dydata ~= nil then
 					print_r(dydata)
 				end
-				input(dydata.data.text)
+				input(dydata.data.text..zfb[rd(1,#zfb)]..zfb[rd(1,#zfb)])
 				if d('个人资料_保存',true)then
 					改资料 = false
-					return true
+					改过资料 = true
 				end
-				
-				
 			else
 				if tips()then
 					moveTo(width/2,900,width/2,500)
 				end
-		
 			end
 		end
 		delay(1)
@@ -173,7 +196,10 @@ end
 
 
 
+delay(1)
 login()
+		
+
 
 
 

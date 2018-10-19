@@ -67,6 +67,7 @@ function kuaitoutiao()
 		end
 		delay(1)
 	end
+	--[[
 	local logoutTime = os.time()
 	while (true) do
 		if os.time()-logoutTime >= 30 then return false end
@@ -82,6 +83,7 @@ function kuaitoutiao()
 		end
 		delay(2)
 	end 
+	--]]
 end
 
 
