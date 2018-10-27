@@ -52,7 +52,7 @@ function active(app,times)
 		runApp(app)
 		mSleep(times*1000)
 	elseif bid == app then
-		log("在前端")
+		log(bid.."-在前端")
 		return true
 	end
 end

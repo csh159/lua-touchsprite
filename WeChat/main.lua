@@ -119,17 +119,17 @@ function wechat_play()
 	delay(rd(100,200)/100)
 end
 
-path = appDataPath(arr.newsbid['快头条']); 
-dialog(path)		
+--path = appDataPath(arr.newsbid['快头条']); 
+--dialog(path)		
 
 api.wechat()
 --kuaitoutiao()
-os.exit()
+--os.exit()
 
-arr.workTime = 60*1
+arr.workTime = 60*2
 arr.work_key = true
 arr.work_Time_line = os.time()
-arr.rest_time = 60*5
+arr.rest_time = 60*2
 arr.rest_key = false
 arr.rest_time_line = os.time()
 
@@ -138,7 +138,7 @@ while (true) do
 	if os.time() - arr.work_Time_line <= arr.workTime then
 		arr.work_key = true
 		arr.rest_time_line = os.time()
-		arr.rest_time = rd(500,800)
+--		arr.rest_time = rd(500,800)
 		log("微信工作时间")
 	else
 		if os.time()- arr.rest_time_line <= arr.rest_time then
@@ -158,9 +158,6 @@ while (true) do
 		else
 			log("微信休息,执行其它任务",true)
 			kuaitoutiao()
-			
-			
-			
 			
 			
 			
