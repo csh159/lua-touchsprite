@@ -55,9 +55,6 @@ function awz_next()
 			nLog("the result is: " .. result);
 			if tonumber(result) == 1 then
 				return true
-			elseif tonumber(result) == 200 then
-				closeApp(frontAppBid())
-				delay(2)
 			end
 		end	
 	end
@@ -80,7 +77,7 @@ function renameCurrentRecord(name)
 	if code == 200 then
 		local resJson = sz.json.decode(res);
 		local result = resJson.result;
-		--nLog("the result is: " .. result);
+		nLog("the result is: " .. result);
 		return true
 	end	
 end
@@ -139,7 +136,7 @@ function setCurrentRecordLocation(location)
 	if code == 200 then
 		local resJson = sz.json.decode(res);
 		local result = resJson.result;
-		--toast("the result is: " .. result, 2);
+		toast("the result is: " .. result, 2);
 		if tonumber(result) == 1 then
 			return true
 		end
@@ -168,7 +165,7 @@ function getAll()
 	if code == 200 then
 		local resJson = sz.json.decode(res);
 		local result = resJson.result;
-		--toast("the result is: " .. result, 2);
+		toast("the result is: " .. result, 2);
 		if tonumber(result) == 1 then
 			return #readFile('/var/mobile/iggrecords.txt')
 		end
@@ -200,7 +197,7 @@ function getOnlineName()
 		if code == 200 then
 			local resJson = sz.json.decode(res);
 			local result = resJson.result;
-			--nLog("the result is: " .. result);
+			nLog("the result is: " .. result);
 			if tonumber(result) == 1 then
 				jg = readFile('/var/mobile/iggparams.txt')
 		
@@ -229,8 +226,6 @@ end
 
 
 function getTrueName_awz()
-	local awz_name
-	local awz_idfa
 	function getTrueName()
 		local sz = require("sz");
 		local http = require("szocket.http");
@@ -238,7 +233,7 @@ function getTrueName_awz()
 		if code == 200 then
 			local resJson = sz.json.decode(res);
 			local result = resJson.result;
-			--nLog("the result is: " .. result);
+			nLog("the result is: " .. result);
 			if tonumber(result) == 1 then
 				jg = readFile('/var/mobile/iggparams.txt')
 				return jg[1],jg[4]		--name,idfa
@@ -251,19 +246,11 @@ function getTrueName_awz()
 	while (os.time()-timeLine < outTime) do
 		if activeawz(awzbid,3)then
 		else
-			awz_name  , awz_idfa = getTrueName()
-			if awz_name and awz_idfa then
-				nLog("awz_name->"..awz_name)
-				nLog("awz_idfa->"..awz_idfa)
-				return awz_name,awz_idfa
-			else
-				nLog("net work is not")
-				closeApp(awzbid)
-				mSleep(1000)
-			end
+			return getTrueName()
 		end
 		mSleep(1000)
 	end
 end
+
 
 nLog('AWZ 加截完成')

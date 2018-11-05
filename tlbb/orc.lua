@@ -76,6 +76,15 @@ function UpOrc()
 				local uploadqq = tostring(readQQ() or backname(awz))
 				local uproleMun = tostring(roleMun)
 				pic_url = Tlbbupload(uploadqq,uproleMun)['data']['url']
+				if c_pic(aoc['游戏']['游戏弹窗-背包-材料激活-元宝-稀世宝图定位'],"游戏弹窗-背包-材料激活-元宝-稀世宝图定位")then
+--					map_total = orc({x-17,y-20,x,y})
+					lzScreen(x-70,y-22,x,y,0.5)
+					map_url = Tlbbupload(uploadqq.."-map",uproleMun)['data']['url']
+					log("map_url-->"..map_url)
+				else
+					map_url = nil
+				end
+
 				nLog('pic_url->'..pic_url)
 				
 				keepScreen(false)
@@ -87,6 +96,7 @@ function UpOrc()
 					postTlbb.urls = pic_url
 					postTlbb.role = roleMun
 					postTlbb.mail = readQQ() or backname(awz)
+					postTlbb.mapurls = map_url
 					upTlbb(postTlbb)
 					return true
 				end

@@ -130,13 +130,14 @@ function city()
 	--local 技能bug = true
 	show = {}
 	城市中的爵位 = true
+	修墙一次 = true
 	
 	
 	while (os.time()-计时<超时) do
 		if active(app,10)then
 		elseif UI('返回','返回图标',false,1)then
 			if UI('返回','挑战赛界面')then
-				if UI_pic('返回','可以领奖',true)then
+				if not(UI('返回','跨服公会战')) and UI_pic('返回','可以领奖',true)then
 					mSleep(1000)
 				elseif UI('返回','活动中心可以抽奖',true)then
 				elseif UI_pic('返回','活动右侧例表',true)then
@@ -211,6 +212,14 @@ function city()
 
 				--点击城堡-----------------------------------------
 			elseif UI('城堡','在城堡中',false,1)then
+				if 主线 == 4 and 修墙一次 then
+					墙list={{11,371,0x1fa893}, {54,371,0xccc27d}, {592,252,0xe5fff7}, {987,527,0x36bcbd}, }
+					for i,v in ipairs(墙list) do
+						click(v[1],v[2],2)
+					end
+					修墙一次= false
+				end
+				
 				if 上传信息 and values.oneormore ~= '1' then
 					get_info(aoc_zy['city'])
 					click(622,75,2)

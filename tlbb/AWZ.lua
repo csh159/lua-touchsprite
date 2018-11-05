@@ -229,6 +229,8 @@ end
 
 
 function getTrueName_awz()
+	local awz_name
+	local awz_idfa
 	function getTrueName()
 		local sz = require("sz");
 		local http = require("szocket.http");
@@ -249,11 +251,19 @@ function getTrueName_awz()
 	while (os.time()-timeLine < outTime) do
 		if activeawz(awzbid,3)then
 		else
-			return getTrueName()
+			awz_name  , awz_idfa = getTrueName()
+			if awz_name and awz_idfa then
+				nLog("awz_name->"..awz_name)
+				nLog("awz_idfa->"..awz_idfa)
+				return awz_name,awz_idfa
+			else
+				nLog("net work is not")
+				closeApp(awzbid)
+				mSleep(1000)
+			end
 		end
 		mSleep(1000)
 	end
 end
-
 
 nLog('AWZ 加截完成')

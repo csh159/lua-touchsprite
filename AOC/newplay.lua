@@ -4,7 +4,7 @@ function new_other()
 	上兵统计 = 上兵统计 or 0
 	if UI('新手','战斗界面中',false,1)then
 		if UI('新手','战斗准备',false,1)then
-			
+			第一次滑动英雄 = true
 			预设位置={{1045,162,0x0a0c04},{1220,166,0x0d0e08},{1041,257,0x060c07},
 				{1220,252,0xffffff},{1048,350,0xdbdbdb},{1227,348,0x090c08},{1044,442,0x0d0f05},{1222,443,0x111609},}
 			--values.yiji_arm 预设编号(0,1,2,3)设置1,设置2,设置3,全上
@@ -43,24 +43,25 @@ function new_other()
 			end
 			
 		elseif UI_pic('新手','寻找英雄',false)then
-			if x < 700 and y > 250 then
+			if x < 800 and y > 180 then
 				log('英雄位置正常')
-				--[[
 				if UI_pic('战斗','英勇跳跃',true) or UI_pic('战斗','箭雨',true) then
 					if UI_pic('战斗','攻击目标',false)then
 						click(x-50,y+20)
 					end
 					UI_pic('战斗','取消',true)
 				end
-				--]]
-			elseif x > 700 then
-				moveTo(450,300,300,300,20,20)
-			elseif y < 250 then
-				moveTo(300,300,300,450,20,20)
+			elseif x > 900 then
+				moveTo(450,300,300,300,20,10)
+			elseif y < 150 then
+				moveTo(300,300,300,450,20,10)
 			end
 
 		else
-			--moveTo(500,600,400,600,20,20)
+			if 第一次滑动英雄 then
+				moveTo(1068,173,553,471,20,10)
+				第一次滑动英雄 = false
+			end
 		end
 	elseif UI('other','取消战斗',true,1)then		--战斗
 		上兵统计 = 0
@@ -280,6 +281,6 @@ function newplay()
 				end
 			end
 		end
-		mSleep(1000)
+		delay(0.2)
 	end
 end

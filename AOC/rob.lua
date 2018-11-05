@@ -469,6 +469,9 @@ function find_kuang()
 						if kuang_setting[0] and k == '水' then
 							zy_mun = zy_mun + 2
 							log('水跳过')
+						elseif kuang_setting[7] and k == '密银' then
+							zy_mun = zy_mun + 2
+							log('密银跳过')
 						else
 							zy_mun = zy_mun + 1
 						end
@@ -479,6 +482,12 @@ function find_kuang()
 							zy_mun = zy_mun + 2
 						elseif kuang_setting[2] and k == '木' then
 							zy_mun = zy_mun + 2
+						elseif kuang_setting[6] and k == '血钻' then
+							zy_mun = zy_mun + 2
+							log('血钻跳过')						
+						elseif kuang_setting[8] and k == '水晶' then
+							zy_mun = zy_mun + 2
+							log('水晶跳过')
 						else
 							zy_mun = zy_mun + 1
 						end
@@ -487,7 +496,7 @@ function find_kuang()
 			end
 			keepScreen(false)
 			
-			if setting[20] and zy_mun >= 1 then
+			if setting[20] and zy_mun >= 2 then
 				log("准备找遗迹")
 				nLog(cx+979 ..",".. cy-25)
 				if c_pic(aoc['返回']['指向目标地'],'指向目标地',true)then
