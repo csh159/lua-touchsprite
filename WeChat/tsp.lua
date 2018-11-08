@@ -1,6 +1,8 @@
 width,hight=getScreenSize()
 nLog(width..'*'..hight)
---nLog(frontAppBid() or '桌面')
+--local 桌面 = frontAppBid()
+--if type(桌面) == 'string' then nLog(桌面) else nLog("桌面") end
+
 
 --深度打印一个表
 function print_r(t)

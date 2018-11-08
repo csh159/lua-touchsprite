@@ -8,3 +8,5 @@ name.lua
 api.lua
 UI.lua
 ocr.lua
+
+东方头条.lua

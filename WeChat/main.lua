@@ -3,9 +3,10 @@ require("tsp")
 require("name")
 require("api")
 require("UI")
+require("ocr")
 --log(frontAppBid())
 
-
+init('0',0)
 arr={}
 arr.bid="com.tencent.xin"
 
@@ -15,9 +16,15 @@ arr.newsbid['东方头条']="com.gaoxin.EastNewsAppstore"
 arr.newsbid['趣头条']="com.jifen.qukan"
 arr.newsbid['多点趣闻']="com.xinwen.duodian"
 
+arr.qtt={}
+arr.dftt={}
+arr.qutt={}
+arr.ddqw={}
+
 
 t={}
 require("快头条")
+require("东方头条")
 
 
 function wechat_send_time()
@@ -45,8 +52,8 @@ t['微信聊天界面_发送']={ 0xffffff, "-13|-23|0x007aff", 90, 501, 1058, 62
 t['微信_back']={ 0xffffff, "14|-15|0xffffff,14|15|0xffffff", 90, 11, 50, 90, 115}
 
 function wechat_send()
-	local TimeL = os.time()
-	while (os.time() - TimeL < 30 ) do
+	local TimeLs = os.time()
+	while (os.time() - TimeLs < 30 ) do
 		if d('微信菜单_信息红点',true)then
 		elseif d('微信聊天界面')then
 			log("x,y("..x..","..y)
@@ -124,9 +131,10 @@ end
 
 api.wechat()
 --kuaitoutiao()
+--dongfangtoutiao()
 --os.exit()
 
-arr.workTime = 60*2
+arr.workTime = 60*3
 arr.work_key = true
 arr.work_Time_line = os.time()
 arr.rest_time = 60*2
@@ -140,13 +148,16 @@ while (true) do
 		arr.rest_time_line = os.time()
 --		arr.rest_time = rd(500,800)
 		log("微信工作时间")
+		log('-------------- ' .. os.time() - arr.work_Time_line)
+		log(arr.work_Time_line)
 	else
 		if os.time()- arr.rest_time_line <= arr.rest_time then
 			arr.work_key = false
 			log("微信休息时间")
 		else
-			arr.workTime = rd(60,100)
+			arr.workTime = rd(1,5)*60
 			arr.work_Time_line = os.time()
+			arr.work_key = true
 		end
 	end
 	
@@ -158,7 +169,7 @@ while (true) do
 		else
 			log("微信休息,执行其它任务",true)
 			kuaitoutiao()
-			
+			dongfangtoutiao()
 			
 			
 			if frontAppBid() == arr.bid then
