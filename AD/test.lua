@@ -5,7 +5,5 @@
 
 
 
-
-
-openURL('https://site.cc.cmbimg.com/CampaignWeb/index.shtml#/gainUser/home?cn=neitest201809')
+openURL('http://shop120247289.m.taobao.com')
 

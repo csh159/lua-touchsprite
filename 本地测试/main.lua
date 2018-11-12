@@ -1,95 +1,60 @@
+
+require("TSLib")
 require("tsp")
-
-ma ={
-	{"71016040111099"},
-	{"71016040113352"},
-	{"71016040113788"},
-	{"71016040120789"},
-	{"71016040123527"},
-	{"71016040124172"},
-	{"71016040125560"},
-	{"71016040126971"},
-	{"71016040134553"},
-	{"71016040138602"},
-	{"71016040149412"},
-	{"71016040159536"},
-	{"71016040164394"},
-	{"71016040173536"},
-	{"71016040174465"},
-	{"71016040183757"},
-	{"71016040184016"},
-	{"71016040188312"},
-	{"71016040191684"},
-	{"71016040193945"},
-	{"71016040194307"},
-	{"71016040195320"},
-	{"71020160401973"},
-	{"71160401100498"},
-	{"71160401101512"},
-	{"71160401103330"},
-	{"71160401103901"},
-	{"71160401118262"},
-	{"71160401120617"},
-	{"71160401122783"},
-	{"71160401125782"},
-	{"71160401128420"},
-	{"71160401129937"},
-	{"71160401130745"},
-	{"71160401131444"},
-	{"71160401134015"},
-	{"71160401136013"},
-	{"71160401136107"},
-	{"71160401143143"},
-	{"71160401147249"},
-}
+require("AWZ")
 
 
-aoc={}
-aoc['main']={{209,2,0x46a1de},{296,8,0x46a1de},{469,7,0x46a1de},}
-			请输入={523,264}
-aoc['查询']={ 0x1171c7, "8|-2|0xffffff", 90, 326, 338, 433, 397}
 
-function res(txt)
-	local TimeLine = os.time()
-	local TimeOut = 30
-	
-	local resut = false
-	local shuru = true
-	while (true) do
-		if done(aoc['main'],'main')then
-			if resut then
-				delay(2)
-				return true
-			else
-				click(请输入[1],请输入[2])
-				input('\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b')
-				input(txt)
-				if c_pic(aoc['查询'],'查询',true)then
-					delay(2)
-					resut = true
-				end
-			end		
+
+url = 'http://shop120247289.m.taobao.com'
+
+
+
+t={}
+t['url_打开']={{464,628,0x007aff}, {198,629,0x007aff}, {472,616,0x007aff}, }
+t['taobao_完整展示']={{44,1076,0x569fd5}, {87,1110,0x57a1d3}, {45,1111,0x569fd4}, {75,1086,0x2e2c2a}, }
+
+function open()
+	local timeline = os.time()
+	openURL(url)
+	delay(2)
+	while (os.time()-timeline < 30) do
+		if d('url_打开',true,1)then
+			delay(10)
+			return true
 		end
+		delay(2)
 	end
 end
 
-for i,v in pairs(ma)do
-	res(v[1])
+function see()
+	local timeline = os.time()
+	while (os.time()-timeline < 30) do
+		if d('taobao_完整展示',true)then
+			moveTo(300,900,300,900-400,rd(10,20))
+			delay(rd(1,3))
+			click(rd(200,600),rd(200,700))
+		else
+			click(rd(200,600),rd(200,700))
+		end
+		delay(2)
+	end
 end
 
 
+vpnx()
 
-
-
-
-
-
-
-
-
-
-
-
+while (true) do
+	if awzNew() then
+		if vpn() then
+			if open()then
+				see()
+			end
+		end
+	end
+	vpnx()
+	delay(3)
+end
 
 
 

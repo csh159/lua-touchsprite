@@ -1,6 +1,7 @@
 [res]
 [lib]
 [file]
+AWZ.lua
 tsp.lua
 main.lua
 ip地址.lua
