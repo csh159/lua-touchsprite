@@ -1,69 +1,35 @@
-弹出经验卡 = { 0xfefefd, "-109|1|0xfefefd,-55|-55|0xfdfdcd,-54|54|0xcac999", 90, 538, 38, 791, 251 }
+
+
+
+----------------------------------------------------开宝箱---------------------------
 function box()
-	time_line = os.time()
-	out_time = 60*5
-	local click_times = 0
-	click_true = true
+	local time_line = os.time()
+	local out_time = 60*2
 	
 	while (os.time()-time_line < out_time) do
 		if active(app,10)then
-			启动画面 = 0
 		elseif UI('在地图中','在地图界面',false,2)then
 			UI_pic('宝箱','未展开',true)
 		elseif UI_pic('宝箱','展开',false)then
 			UI_pic('宝箱','宝库',true)
 		elseif UI('返回','返回图标',false,1)then
 			if UI('返回','宝库界面',false,1)then
-				width = 142
-				height = 181
-				left_box ={160,196}
-				if click_true then
-					click( left_box[1]+4*width,left_box[2])
-					delay(2)
-				end
-				
-				资源卡 = {}
-				资源卡.金={ 0xe6e770, "19|18|0xeddf69,15|18|0xd59227", 90, 117, 359, 324, 447}
-				资源卡.木={ 0xdfb67e, "4|-5|0xe2ca8d,11|-9|0xc19259", 90, 122, 361, 264, 450}
-				资源卡.水={ 0x84f5f8, "10|-4|0x00c7de,5|-9|0x0b3b48", 90, 122, 361, 264, 450}
-				资源卡.银={ 0x43f6ed, "16|-4|0xb2fea9,20|7|0xb9fea3", 90, 124, 361, 276, 446}
-				资源卡.钻={ 0xff3d43, "-8|5|0xd00d15,-9|16|0xf2172e", 90, 124, 361, 276, 446}
-				资源卡.晶={ 0xe73ede, "-3|-9|0x7e42fc,-7|-9|0x643cde", 90, 124, 361, 276, 446}
-				首具卡 = { 0xf4d765, "0|1|0x1b2b2b,0|3|0xf0d363,0|12|0xf4d765", 90, 142, 297, 520, 342}
-				判断是否为资源 = false
-				if c_pic(首具卡,'首具卡',false)then
-					for k,v in pairs(资源卡)do
-						if c_pic(v,k,false)then
-							判断是否为资源 = true
-						end
-					end
-					if 判断是否为资源 then
-						if UI_pic('宝箱','开启10次',true) or UI_pic('宝箱','开启1次',true)then
-							click_true = false
-						elseif UI('宝箱','领取',true,1)then
-						else
-							click_true = true
-						end
-					else				--如果不是资源卡需要退出
+				if (UI('返回','宝库界面_宝箱')) then
+					if not(UI_pic('宝箱','宝库_无物品'))then
 						return true
 					end
+					click(167,252)
+					if UI_pic('宝箱','开启10次',true) or UI_pic('宝箱','开启1次',true)then end
 				else
-					if UI_pic('宝箱','开启10次',true) or UI_pic('宝箱','开启1次',true)then
-						click_true = false
-					else
-						click_true = true
-					end
+					click(771,91)
 				end
 			else
 				UI('返回','返回图标',true,1)
 			end
 		elseif UI('宝箱','领取',true,1)then
-		elseif c_pic(弹出经验卡,'弹出经验卡',false)then
-			return true
-		else
 		end
+		mSleep(1000)
 	end
-	mSleep(1000)
 end
 
 
@@ -119,8 +85,8 @@ end
 
 
 function city()
-	计时 = os.time()
-	超时 = 60*3
+	local 计时 = os.time()
+	local 超时 = 60*3
 	优先主城 = setting[13]
 	不造仓库的轮回 = 0
 	开箱一次 = true
@@ -134,10 +100,10 @@ function city()
 	
 	
 	while (os.time()-计时<超时) do
-		if active(app,10)then
+		if active(app,5)then
 		elseif UI('返回','返回图标',false,1)then
 			if UI('返回','挑战赛界面')then
-				if not(UI('返回','跨服公会战')) and UI_pic('返回','可以领奖',true)then
+				if not(UI_pic('返回','跨服公会战')) and UI_pic('返回','可以领奖',true)then
 					mSleep(1000)
 				elseif UI('返回','活动中心可以抽奖',true)then
 				elseif UI_pic('返回','活动右侧例表',true)then
@@ -156,28 +122,9 @@ function city()
 					end
 				end
 			elseif setting[0] and UI('返回','邮件界面')then
-				if UI_pic('返回','礼包红点',true)then
-					log('滑动一次')
-					if UI_pic('返回','奖励确定',true)then
-					else
-						moveTo(450,600,450,250,20)
-						delay(2)
-					end
---				elseif c_p(aoc['城堡']['邮件红点'],'邮件红点',true)then
+				if UI_pic('返回','邮件界面_一键',true)then
 				else
-					if UI_pic('返回','有邮件在',false)then
-						UI('返回','返回图标',true,1)
-					else
-						moveTo(1058,146,1058,186,20)
-						delay(1)
-						moveTo(1217,146,1016,146,10)
-						if UI_pic('返回','邮件不能删除',false)then
-							moveTo(1058,146,1058,186,20)
-							moveTo(1058,146,1058,186,20)
-						elseif UI_pic('返回','邮件可以删除',true)then
-							log('删除一次')
-						end
-					end
+					UI('返回','返回图标',true,1)
 				end
 			elseif setting[1] and UI('返回','商城界面',false,1)then
 				if UI('返回','宝箱翻页',true,1)then
@@ -223,31 +170,26 @@ function city()
 				if 上传信息 and values.oneormore ~= '1' then
 					get_info(aoc_zy['city'])
 					click(622,75,2)
-					if UI('other','资源例表')then
-						keepScreen(true)
-						get_info(aoc_zy['资源'])
-						show['iphonename']= iphonename
-						show['imei']=imei
-						show['idfa']=idfa
-						show['awz']= awz_mun
-						show['who']= values.who
-						
-						for k,v in pairs(show) do
-							log(k..":"..v)
-						end
-						keepScreen(false)
-						upAoc(show)
-						upAoc_wenfree(show)
-						上传信息 = false
+					keepScreen(true)
+					get_info(aoc_zy['资源'])
+					show['iphonename']= iphonename
+					show['imei']=imei
+					show['idfa']=idfa
+					show['awz']= awz_mun
+					show['who']= values.who
+					
+					for k,v in pairs(show) do
+						log(k..":"..v)
 					end
+					keepScreen(false)
+					upAoc(show)
+					upAoc_wenfree(show)
+					上传信息 = false
 				else
 					delay(1.5)
-					if kuang_setting[5]==false and UI_pic('城堡','木材',true)then
-					end
-					if kuang_setting[4]==false and UI_pic('城堡','金币',true)then
-					end
-					if kuang_setting[3]==false and UI_pic('城堡','泉水',true)then
-					end
+					if kuang_setting[5]==false and UI_pic('城堡','木材',true)then	end
+					if kuang_setting[4]==false and UI_pic('城堡','金币',true)then	end
+					if kuang_setting[3]==false and UI_pic('城堡','泉水',true)then	end
 					
 					if UI_pic('城堡','主城升级中',false)or UI_pic('城堡','主城等待中',false)then
 						return true
@@ -289,41 +231,9 @@ function city()
 					delay(1)
 					return false
 				else
---					moveTo(100,670,300,670,5)
---					log('滑动一下')
 					delay(1)
-					
 					if 优先主城 and UI_pic('城堡','主城建筑',true)then
-					elseif 造新建筑 and UI_pic('城堡','新建筑',false)then
-						log(x..','..y)
-						aoc['城堡']['新仓库']={ 0xe27c48, "8|-9|0xd49044,43|7|0x938045,41|-24|0xdf8c47", 90, x-74, y+13, x+45, y+122}
-						if UI_pic('城堡','新仓库',false)then
-							造新建筑 = false
-						else
-							log('非仓库')
-							UI_pic('城堡','新建筑',true)
-						end
-					elseif UI_pic('城堡','非主城建筑',false)then		--非主城
-						log(x..','..y)
-						aoc['城堡']['仓库文字']={ 0x3d5765, 
-							"0|-2|0xffffff,2|-5|0x3f5a66,2|-12|0x415c67,17|-5|0x405866,19|-5|0xffffff", 90, x-31, y, x+35, y+32}
-						if UI_pic('城堡','仓库文字',false)then
-							不造仓库的轮回 = 不造仓库的轮回 + 1
-							if 不造仓库的轮回 % 2 == 1 then
-								log('仓库右')
-								aoc['城堡']['非主城建筑'][4]=x+80
-								aoc['城堡']['非主城建筑'][6]=1200
-							else
-								log('仓库左')
-								aoc['城堡']['非主城建筑'][4]=100
-								aoc['城堡']['非主城建筑'][6]=x-70
-							end
-						end
-						
-						if UI_pic('城堡','非主城建筑',true)then
-							log('找到建筑')
-						end
-						aoc['城堡']['非主城建筑']={ 0x81b6c4, "76|0|0x2c7482,-62|0|0x488099", 90, 0, 706, 1333, 708}
+					elseif UI_pic('城堡','非主城建筑',true)then		--非主城
 					elseif UI_pic('城堡','主城建筑',true)then
 					end
 				end
@@ -354,12 +264,9 @@ function city()
 					采集信息 = false
 					keepScreen(false)
 				end
-			elseif setting[22] and 活动星星打开一次 and UI_pic('在地图中','活动星星',true)then
-				活动星星打开一次 = false
 			elseif setting[22] and UI_pic('在地图中','活动奖励',true)then					--活动中心
-			elseif setting[0] and UI('城堡','邮件提醒',true,1)then		--邮件提示
+			elseif setting[0] and UI_pic('城堡','邮件提醒',true,1)then		--邮件提示
 			elseif setting[1] and UI('城堡','商城红点',true,1)then		--商城提示
-			--elseif setting[2] and UI('城堡','有任务奖励',true,1,80)then		--有任务奖励
 			elseif 开箱一次 and setting[19] then
 				box()
 				开箱一次 = false
@@ -367,6 +274,7 @@ function city()
 			UI('在地图中','在地图界面',true,2)
 		elseif UI('城堡','成功为会员',true,2)then
 			return true
+		
 		else
 			log('tip')
 			other()

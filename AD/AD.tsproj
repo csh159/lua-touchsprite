@@ -4,7 +4,6 @@
 tsp.lua
 main.lua
 UI.lua
-TEST.lua
 游戏.lua
 input.lua
 清理文件.lua
@@ -16,3 +15,6 @@ input_commnet.lua
 open_url.lua
 
 验证码滑动.lua
+
+
+test.lua

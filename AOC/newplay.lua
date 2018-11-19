@@ -2,9 +2,10 @@
 
 function new_other()
 	上兵统计 = 上兵统计 or 0
-	if UI('新手','战斗界面中',false,1)then
-		if UI('新手','战斗准备',false,1)then
-			第一次滑动英雄 = true
+
+	if UI('新手','战斗界面中_新手',false,1)  or UI('新手','战斗界面中',false,1) then
+		if UI_pic('新手','战斗准备',false,1)then
+			
 			预设位置={{1045,162,0x0a0c04},{1220,166,0x0d0e08},{1041,257,0x060c07},
 				{1220,252,0xffffff},{1048,350,0xdbdbdb},{1227,348,0x090c08},{1044,442,0x0d0f05},{1222,443,0x111609},}
 			--values.yiji_arm 预设编号(0,1,2,3)设置1,设置2,设置3,全上
@@ -16,7 +17,7 @@ function new_other()
 				else
 					上兵统计 = 上兵统计 + 1
 					if 上兵统计 >= 18 then
-						if UI('战斗','可以出战',true,1)then
+						if UI_pic('战斗','可以出战',true,1)then
 							delay(2)
 						else
 							return '战斗失败'
@@ -25,7 +26,11 @@ function new_other()
 						if UI_pic('战斗','受伤英雄',false)then
 							return '战斗失败'
 						else
-							click(1086,663,0.2) 	--点英雄
+							if UI_pic('新手','战斗_选择2级兵',true)then
+								click(1086,663,0.2) 	--点英雄
+							else
+								click(1086,663,0.2) 	--点英雄
+							end
 						end
 					end
 				end
@@ -43,26 +48,27 @@ function new_other()
 			end
 			
 		elseif UI_pic('新手','寻找英雄',false)then
-			if x < 800 and y > 180 then
+			if x <= 800 and y >= 150 then
+				log(x..","..y)
 				log('英雄位置正常')
 				if UI_pic('战斗','英勇跳跃',true) or UI_pic('战斗','箭雨',true) then
 					if UI_pic('战斗','攻击目标',false)then
 						click(x-50,y+20)
+					else
+						click(1080,183)
 					end
 					UI_pic('战斗','取消',true)
 				end
-			elseif x > 900 then
+			elseif x > 800 then
 				moveTo(450,300,300,300,20,10)
 			elseif y < 150 then
 				moveTo(300,300,300,450,20,10)
 			end
 
 		else
-			if 第一次滑动英雄 then
-				moveTo(1068,173,553,471,20,10)
-				第一次滑动英雄 = false
-			end
+			--moveTo(500,600,400,600,20,20)
 		end
+		
 	elseif UI('other','取消战斗',true,1)then		--战斗
 		上兵统计 = 0
 		delay(5)
@@ -72,6 +78,8 @@ function new_other()
 	elseif UI('新手','英雄结算画面',true,1)then
 	elseif UI('新手','战斗胜利',true,1)then
 	elseif UI('新手','招兵确定',true,1)then
+	elseif UI_pic('新手','攻击按钮',true,1)then
+		上兵统计 = 0
 	elseif UI('other','运送矿点',true,1)then
 	elseif UI('other','拦劫',true,1)then
 	elseif UI('other','成功抢车',true,1)then
@@ -88,7 +96,7 @@ function new_other()
 		delay(60*5)
 		UI('other','顶号',true,1)
 	elseif UI('other','聊天退出',true,1)then
-	elseif UI('other','暂停界面',true,2)then
+	elseif UI('other','暂停界面',true,1)then
 	elseif UI('other','选择国家界面')then
 		国家选择 = tonumber(values.world)+1
 		click(aoc['国家位置'][国家选择][1],aoc['国家位置'][国家选择][2])
@@ -123,7 +131,7 @@ end
 
 function 任务()
 	if UI('返回','返回图标',false,1)then
-		if UI('新手','任务',false,1)then
+		if UI('返回','任务界面',false,1)then
 			if UI_pic('新手','领取奖励',true)then
 			elseif UI_pic('新手','找到目标',true)then
 			elseif UI_pic('新手','任务激活',true)then
@@ -242,21 +250,24 @@ end
 
 
 function newplay()
-	计时 = os.time()
-	超时 = 60*15
-	other_mun = 0
-	new_lun = 0
+	local 计时 = os.time()
+	local 超时 = 60*20
+	local other_mun = 0
+	local new_lun = 0
 	while (os.time()-计时<超时) do
-		if active(app,10)then
+		if active(app,5)then
+		elseif UI('新手','战斗界面中_新手',false,1)  or UI('新手','战斗界面中',false,1) then
+			new_other()
 		elseif UI('在地图中','在地图界面',false,3)then
 			toast('有领地',1)
 			return true
 		elseif UI('换服','在地图上')then
 			other_mun = 0
-			local 新手四个方向={{657,461,0x71852e},{502,341,0x788e37},{645,233,0x7a7e3a},{800,351,0x768836},}
+			local 新手四个方向={{666,254,0xc6d1d7}, {750,286,0xddeffa}, {764,360,0xe4e4e6}, {742,418,0xc8d1d8}, 
+					{668,458,0xc6cfd9}, {583,389,0x787f89}, {560,340,0x8d7c87}, {594,278,0x9ca6b2}, }
 			
 			new_lun = new_lun + 1
-			new_lun_key = new_lun%4+1
+			new_lun_key = new_lun %(#新手四个方向)+1
 			click(新手四个方向[new_lun_key][1],新手四个方向[new_lun_key][2])
 			
 			if bing()then
@@ -275,7 +286,7 @@ function newplay()
 			log('other')
 			if new_other() then
 				other_mun = other_mun + 1
-				if other_mun > 100 then
+				if other_mun > 2 then
 					other_mun = 0
 					other()
 				end

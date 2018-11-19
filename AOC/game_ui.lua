@@ -42,7 +42,7 @@ MyTable = {
             {
                 ["id"] = "game_main",
                 ["type"] = "RadioGroup",
-                ["list"] = "0创号,1换服,2新手,3兑券,4升城,5开图,6(升城|遗迹|采矿),7(升城|采矿),8--,9--,10--,11清理,12--,13--,14--,15发广告",
+                ["list"] = "0创号,1换服,2新手,3兑券,4升城,5开图,6(升城|遗迹|采矿),7(升城|采矿),8~,9遗迹采矿,10~,11清理,12~,13~,14~,15发广告",
                 ["select"] = "0",
             },
 			{
@@ -55,7 +55,7 @@ MyTable = {
             {
                 ["id"] = "setting",
                 ["type"] = "CheckBoxGroup",
-                ["list"] = "0邮件,1宝箱,2任务,3爵位,4战损,5医院,6剑,7枪,8弓,9骑,10研究,11造兵,12商店稀有,13优升主城,14地图,15优先右侧,16备份名,17兵升级,18商店木材,19开背包,20遗迹,21魔镜,22活动",
+                ["list"] = "0邮件,1宝箱,2任务,3*爵位*,4战损,5-,6-,7~,8~,9~,10研究开关,11~,12商店稀有,13优升主城,14地图,15优先右侧,16备份名,17~,18商店木材,19开背包,20遗迹,21魔镜,22活动",
                 ["images"] = "",
                 ["select"] = "",
                 ["scale"] = 0.4,
@@ -74,36 +74,6 @@ MyTable = {
                 ["size"] = 12,
                 ["align"] = "center",
                 ["color"] = "0,0,0",
-            },
-            {
-                ["type"] = "Label",
-                ["text"] = "彩矿数量:",
-                ["width"] = 150,
-                ["nowrap"] = 1,
-            },
-            {
-                ["id"] = "kuang_mun",
-                ["type"] = "Edit",
-                ["width"] = 300,
-                ["prompt"] = "彩矿数量",
-                ["text"] = "30",
-                ["kbtype"] = "number",
-                
-            },
-            {
-                ["type"] = "Label",
-                ["text"] = "遗迹数量:",
-                ["width"] = 150,
-                ["nowrap"] = 1,
-            },
-            {
-                ["id"] = "yiji_mun",
-                ["type"] = "Edit",
-                ["width"] = 300,
-                ["prompt"] = "遗迹数量",
-                ["text"] = "30",
-                ["kbtype"] = "number",
-                
             },
             {
                 ["type"] = "Label",
@@ -137,7 +107,7 @@ MyTable = {
             {
                 ["id"] = "keji_setting",
                 ["type"] = "RadioGroup",
-                ["list"] = "0枪,1弓,2剑,3骑,4修女,5车",
+                ["list"] = "枪,弓,剑,骑,牧,车",
                 ["images"] = "枪.png,弓.png,剑.png,骑.png,修女.png,车.png",
                 ["select"] = "",
                 ["scale"] = 0.4,
@@ -233,8 +203,6 @@ if UIret == 1 then
 	nLog("兑换券:"..values.xchange)
 	nLog("主线功能:"..values.game_main)
 	nLog("游戏帐号:"..values.game_mun)
-	nLog("采矿数量:"..values.kuang_mun)
-	nLog("遗迹数量:"..values.yiji_mun)
 	nLog("遗迹预设:"..values.yiji_arm)
 	nLog("游戏设置:"..values.setting)
 	nLog('所有者:'..values.who)

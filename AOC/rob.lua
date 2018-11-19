@@ -4,7 +4,7 @@ function yiji_other()
 	上兵统计 =  上兵统计 or 0
 
 	if UI('新手','战斗界面中',false,1)then
-		if UI('新手','战斗准备',false,1)then
+		if UI_pic('新手','战斗准备',false,1)then
 			
 			预设位置={{1045,162,0x0a0c04},{1220,166,0x0d0e08},{1041,257,0x060c07},
 				{1220,252,0xffffff},{1048,350,0xdbdbdb},{1227,348,0x090c08},{1044,442,0x0d0f05},{1222,443,0x111609},}
@@ -94,6 +94,7 @@ function yiji_other()
 	elseif UI('other','取消战斗',true,1)then
 		delay(3)
 	elseif UI('other','被点确认',true,1)then
+	elseif UI_pic('other','蓝红按钮_',true,1)then
 	elseif UI_pic('战斗','取消',true)then	--取消技能
 	elseif UI('other','战争学院胜利',true,1)then	--取消技能	
 	elseif UI('other','战力不足',true,1)then	--取消技能
@@ -181,8 +182,8 @@ end
 
 
 function auto_all()
-	计时 = os.time()
-	超时 = 60*15
+	local 计时 = os.time()
+	local 超时 = 60*15
 	轮换 = 1
 	遗迹 = false
 	遗迹数量 = 0
@@ -527,8 +528,8 @@ end
 
 
 function auto_get()
-	计时 = os.time()
-	超时 = 60*15
+	local 计时 = os.time()
+	local 超时 = 60*15
 	轮换 = 1
 	点矿 = false
 	采矿数量 = 0
@@ -540,23 +541,22 @@ function auto_get()
 	
 	while (os.time()-计时< 60 * 15 ) do
 		if active(app,10)then
-		elseif 采矿数量 >= tonumber( values.kuang_mun ) then
-			return true
 		elseif setting[14] and 开一次地图 and UI('在地图中','在地图界面',true,3)then
 			delay(2)
 			开一次地图 = false
 		elseif UI('在地图中','在地图界面',false,3,80)then
-			log('采矿路上----')
+			log('----采矿路上----')
 			delay(1)
-			if UI('在地图中','城市奖励' ,true,1)then
+			if UI_pic('在地图中','城市奖励' ,true,1)then
 			elseif UI('在地图中','声望奖励',true,1)then
+				delay(2)
 			elseif UI('在地图中','战争结束',true,2)then
 			else
-				
 				map_time = os.time()
 				while (点矿 and (os.time()-map_time < 40)) do
 					keepScreen(true)
-					if UI_pic('地图','正在跑路',false)or UI_pic('地图','正在跑路小',false)then
+--					if UI_pic('地图','正在跑路',false)or UI_pic('地图','正在跑路小',false)then
+					if UI_pic('地图','正在跑路',false) then
 						delay(3)
 					else
 						keepScreen(false)
@@ -581,22 +581,23 @@ function auto_get()
 						点矿 = false
 					end
 					轮换 = 轮换 + 1
-					
 					UI_pic('地图','探索',true)
 					UI('返回','返回图标',true,1)
 					UI('在地图中','在地图界面',true,4,80)
-					
 				end
 			end
-			
-		elseif UI('返回','返回图标',false,1)then
+		elseif UI('返回','返回图标',false,1) and not(UI('新手','战斗界面中',false,1)) then
 			if UI('返回','任务界面',false,1)then
 				
 				if UI('返回','活跃界面',false,1)then
 					if UI_pic('返回','活跃点击',true,1)then
 					elseif UI_pic('返回','活跃领取',true,1)or UI_pic('返回','活跃领取-银宝箱',true,1)then
 					else
-						UI('返回','返回图标',true,1)
+						moveTo(820,193,473,193,20)
+						if UI_pic('返回','活跃领取',true,1)or UI_pic('返回','活跃领取-银宝箱',true,1)then
+						else
+							UI('返回','返回图标',true,1)
+						end
 					end
 				elseif UI('返回','签到界面',false,1)then
 					if c_pic(aoc['返回']['可以签到'],'可以签到',true)then
@@ -611,8 +612,9 @@ function auto_get()
 					end
 				end
 			elseif UI_pic('声望','声望界面',false)then
-				if UI_pic('声望','未开奖励',true)then
 				
+				if UI_pic('返回','可领龙币_钱袋',true)then
+				elseif UI_pic('声望','未开奖励',true)then
 				else
 					UI('返回','返回图标',true,1)
 				end
@@ -651,7 +653,7 @@ function auto_get()
 					UI('返回','返回图标',true,1)
 				end
 			elseif UI('返回','公会界面',false,1)then
-				if UI('返回','城市界面')then
+				if UI_pic('返回','城市界面')then
 					if UI_pic('返回','全部领取',true)then
 					elseif UI_pic('返回','城市奖励领取',false)then
 						click(x+50,y)
@@ -659,8 +661,8 @@ function auto_get()
 						UI('返回','返回图标',true,1)
 					end
 				elseif UI_pic('返回','赠品领取',true)then
-					
 				elseif UI_pic('返回','公会奖励红点',true)then
+					delay(2)
 				else
 					UI('返回','返回图标',true,1)
 				end
@@ -672,8 +674,9 @@ function auto_get()
 			log('矿'.. 采矿数量)
 			点矿 = false
 		else
-			nLog('other')
+			nLog('-other-')
 			if setting[20] then
+				nLog('--other--')
 				if yiji_other()then
 					other()
 				end

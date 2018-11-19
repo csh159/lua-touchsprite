@@ -4,7 +4,7 @@ init('0',1)
 
 
 function ocr(x1,y1,x2,y2)
-	return ocrText(x1,y1,x2,y2, 0) or 0
+	return ocrText(x1,y1,x2,y2, 10) or 0
 end
 
 aoc_zy={}
